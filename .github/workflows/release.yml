@@ -38,7 +38,7 @@ jobs:
         run: curl -O https://github.com/anspar/arag/releases/download/v0.2.21/arag_ubuntu-20.04 && chmod +x arag_ubuntu-20.04
 
       - name: build 
-        run: ls && ./arag_ubuntu-20.04 release && echo done && ls
+        run: ls && ./arag_ubuntu-20.04 -V && echo after-V && ./arag_ubuntu-20.04 release && echo done && ls
 
       - name: Upload release
         uses: actions/upload-release-asset@v1
@@ -46,6 +46,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT }}
         with:
           upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: build.html
+          asset_path: ./build.html
           asset_name: build.html
           asset_content_type: text/html
