@@ -1,0 +1,3 @@
+ipfs_gateway: https://ipfs.anspar.io/gateway
+dependencies:
+  - https://cdn.ethers.io/lib/ethers-5.0.umd.min.js
