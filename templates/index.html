@@ -1,5 +1,6 @@
 {{#unless release}}
     {{live_update}}
+    {{inject_gateway}}
     {{import_js_web "https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"}}
 {{/unless}}
 
@@ -27,7 +28,6 @@
     </div>
 </div>
 
-{{inject_gateway}}
 <script>
     const ANS_ABI = {{import_json "static/ANS_ABI.json"}};
 </script>

@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v1
       
       - name: download arag 
-        run: curl -O https://github.com/anspar/arag/releases/download/v0.2.21/arag_ubuntu-20.04 && chmod +x arag_ubuntu-20.04
+        run: curl -O https://github.com/anspar/arag/releases/download/v0.2.23/arag_ubuntu-20.04 && chmod +x arag_ubuntu-20.04
 
       - name: build 
         run: arag_ubuntu-20.04 release

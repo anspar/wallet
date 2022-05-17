@@ -8,6 +8,7 @@
 ### Requirements 
 1. In html file before wallet import
 ```
+    {{inject_gateway}}
     {{import_js_web "https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"}}
 ```
 2. In arag.yml
