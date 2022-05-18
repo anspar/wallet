@@ -20,7 +20,6 @@ const WALLET = {
         this.user_address = this.web3.selectedAddress;
         try{
             let data = await this.is_ans_available(forceEdit);
-            console.log(data, data[1].background_color);
             document.querySelector("#arag_wallet>img").src = `${IPFS_GATEWAY}/${data[0]}/${data[1].image}`;
             document.querySelector("#arag_wallet>span").innerHTML = data[1].name.length>7?`${data[1].name.substring(0,5)}..`:data[1].name;
             document.querySelector("#arag_wallet").style.setProperty("background", data[1].background_color);
@@ -35,7 +34,7 @@ const WALLET = {
         } 
         
         this.web3 = window.ethereum;
-        return (await this.web3.enable()).length>0
+        return (await this.web3.send('eth_requestAccounts')).result.length>0
     },
     is_contract_ready: async function(){
         if(!await this.is_ready()){
