@@ -4,6 +4,7 @@
     width: calc(100vh*0.05);
     height: calc(100vh*0.05);
     right: calc(100vw*0.01);
+    top: calc(100vh*0.01);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,11 +26,21 @@
     height: 50%;
 }
 
-#arag_wallet, #arag_wallet_modal>[q1], #arag_wallet_modal>[q2], #arag_wallet_modal>[q1]>div span, #arag_wallet_modal>[q2]>div span, #arag_wallet_modal>[q2]>input{
+#arag_wallet, 
+#arag_wallet_modal>[q1], 
+#arag_wallet_modal>[q2], 
+#arag_wallet_modal>[q1]>div span, 
+#arag_wallet_modal>[q2]>div span, 
+#arag_wallet_modal>[q2]>input{
     border-style: none;
     border-radius: 100vh;
-    filter: drop-shadow(0 0 20px #5bc0be99);
+    filter: drop-shadow(0 5px 20px #5bc0be99);
     transition: 0.4s;
+}
+
+#arag_wallet_modal>[q2]>input{
+    outline-width: 0;
+    width: 90%;
 }
 
 #arag_wallet_modal{
@@ -92,7 +103,7 @@
 }
 
 #arag_wallet_modal>[q1]>div, #arag_wallet_modal>[q2]>div{
-    width: 40%;
+    width: 60%;
     padding-top: 10%;
     display: flex;
     justify-content: space-between;
