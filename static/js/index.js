@@ -34,7 +34,9 @@ const WALLET = {
         } 
         
         this.web3 = window.ethereum;
-        return (await this.web3.send('eth_requestAccounts')).result.length>0
+        return (await this.web3.request({
+            method: 'eth_requestAccounts'
+        })).length>0
     },
     is_contract_ready: async function(){
         if(!await this.is_ready()){

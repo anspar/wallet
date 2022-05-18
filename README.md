@@ -39,6 +39,35 @@ This will ask user for an ANS. If user owns the ANS the profile will be loaded, 
 ```
 document.addEventListener("DOMContentLoaded", async function(){
     await WALLET.setup();
+    if(!await WALLET.is_ready()) return;
+    ...
+
+    OR
+    
+    if(await WALLET.is_ready()){
+        ...
+    }
+})
+```
+
+### Available Properties
+`WALLET.web3` : returns window.ethereum object
+
+`WALLET.user_address` : returns selected user address
+
+`WALLET.ans` : returns ANS smart contract wrapped with ethersjs library
+
+```
+document.addEventListener("DOMContentLoaded", async function(){
+    await WALLET.setup();
+    if(!await WALLET.is_ready()) return;
+    
+    if(!await WALLET.is_contract_ready()) return;
+
+    let userDetails = await WALLET.ans.functions.who_is('user ans');
+
+    ...
+
 })
 ```
 

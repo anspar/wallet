@@ -4,7 +4,6 @@
     width: calc(100vh*0.05);
     height: calc(100vh*0.05);
     right: calc(100vw*0.01);
-    /* padding: .1vh; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,7 +21,7 @@
 }
 
 #arag_wallet span{
-    font-size: 12px;
+    font-size: 0.7rem;
     height: 50%;
 }
 
