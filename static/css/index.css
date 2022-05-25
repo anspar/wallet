@@ -68,7 +68,7 @@
     justify-content: center;
     align-items: center;
     padding: 1vh;
-    animation: modal_anim .5s 1;
+    animation: arag_modal_anim .5s 1;
 }
 
 @media only screen and (max-width: 600px) {
@@ -77,7 +77,7 @@
     }
 }
 
-@keyframes modal_anim {
+@keyframes arag_modal_anim {
     0%{
         transform: scale(0);
     }

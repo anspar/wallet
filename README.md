@@ -70,7 +70,8 @@ document.addEventListener("DOMContentLoaded", async function(){
 
 })
 ```
-
+### Note
+You can always get all available attributes with `Object.keys(HOSQ_PROVIDER)`
 ## Ask question at [Discord](https://discord.gg/ENQfPEcrZJ)
 
 [anspar.io](https://anspar.io)

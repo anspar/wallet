@@ -33,10 +33,15 @@ const WALLET = {
             return false
         } 
         
-        this.web3 = window.ethereum;
-        return (await this.web3.request({
-            method: 'eth_requestAccounts'
-        })).length>0
+        try{
+            this.web3 = window.ethereum;
+            return (await this.web3.request({
+                method: 'eth_requestAccounts'
+            })).length>0
+        }catch(e){
+            console.error(e);
+            return false
+        }
     },
     is_contract_ready: async function(){
         if(!await this.is_ready()){
@@ -45,6 +50,10 @@ const WALLET = {
         if(this.ans!==null)return true;
 
         try{
+            if(ANS_ABI.networks[this.web3.networkVersion]===undefined){
+                alert(`ANS is not available for chain with id "${this.web3.networkVersion}" `)
+                return false
+            }
             this.ans = this.setup_contract(ANS_ABI.networks[this.web3.networkVersion].address, ANS_ABI.abi);
             return true
         }catch(e){
@@ -150,5 +159,7 @@ const WALLET = {
 };
 
 document.addEventListener("DOMContentLoaded", async function(){
-    await WALLET.setup();
+    if(typeof ethers === "undefined") {
+        alert("'ethers' Object Not found")
+    }
 })

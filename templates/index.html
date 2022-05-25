@@ -1,17 +1,22 @@
 {{#unless release}}
-    {{live_update}}
-    {{inject_gateway}}
-    {{import_js_web "https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"}}
+{{live_update}}
+{{inject_gateway}}
+{{import_js_web "https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"}}
+<script>
+    document.addEventListener("DOMContentLoaded", async function () {
+        await WALLET.setup()
+    })
+</script>
 {{/unless}}
 
 {{import_css "static/css/index.css"}}
-<div id="arag_wallet" >
-    <img src="{{import_img "static/anspar_logo.png"}}">
+<div id="arag_wallet">
+    <img src="{{import_img " static/anspar_logo.png"}}">
     <span>address</span>
 </div>
 
 <div id="arag_wallet_modal">
-    <div q1 >
+    <div q1>
         <span>Do You Own Anspar Name Space (ANS)?</span>
         <div>
             <span>No</span>
@@ -19,7 +24,7 @@
         </div>
     </div>
 
-    <div q2 >
+    <div q2>
         <input type="text" placeholder="What is your ANS?">
         <div>
             <span>Cancel</span>
@@ -29,7 +34,6 @@
 </div>
 
 <script>
-    const ANS_ABI = {{import_json "static/ANS_ABI.json"}};
+    const ANS_ABI = {{ import_json "static/ANS_ABI.json"}};
 </script>
 {{import_js "static/js/index.js"}}
-
