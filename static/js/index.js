@@ -3,6 +3,12 @@ const WALLET = {
     user_address: null,
     ans: null,
     setup: async function(){
+        document.querySelector("#arag_wallet").addEventListener("click", async()=>{
+            if(!await this.is_ready()) return;
+            if(!await this.is_contract_ready()) return;
+            await this._update_user(true);
+        })
+
         if(!await this.is_ready()) return;
         
         if(!await this.is_contract_ready()) return;
@@ -11,10 +17,6 @@ const WALLET = {
         this.web3.on("accountsChanged", async (accounts)=>{
             await this._update_user(false);
         });
-        document.querySelector("#arag_wallet").addEventListener("click", async()=>{
-            await this._update_user(true);
-        })
-
     },
     _update_user: async function(forceEdit){
         this.user_address = this.web3.selectedAddress;
