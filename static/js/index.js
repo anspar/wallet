@@ -65,7 +65,7 @@ const WALLET = {
     },
     setup_contract: function(address, abi){
         let p = new ethers.providers.Web3Provider(this.web3);
-        return new ethers.Contract(address, abi, p);
+        return new ethers.Contract(address, abi, p.getSigner(0));
     },
     _ask_user_own_ans: async function(){
         document.querySelector("#arag_wallet_modal").style.setProperty("display", "flex");
