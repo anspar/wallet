@@ -6,19 +6,19 @@ const WALLET = {
         document.querySelector("#arag_wallet").addEventListener("click", async()=>{
             if(!await this.is_ready()) return;
             if(!await this.is_contract_ready()) return;
-            await this._update_user(true);
+            await this.update_user_ans(true);
         })
 
         if(!await this.is_ready()) return;
         
         if(!await this.is_contract_ready()) return;
         
-        await this._update_user(false);
+        await this.update_user_ans(false);
         this.web3.on("accountsChanged", async (accounts)=>{
-            await this._update_user(false);
+            await this.update_user_ans(false);
         });
     },
-    _update_user: async function(forceEdit){
+    update_user_ans: async function(forceEdit){
         this.user_address = this.web3.selectedAddress;
         try{
             let data = await this.is_ans_available(forceEdit);
@@ -108,8 +108,9 @@ const WALLET = {
                 let user_ans = document.querySelector("#arag_wallet_modal div[q2]>input").value;
                 let u = await self.ans.functions.who_is(user_ans);
                 if(u[0][1].toLowerCase()!==self.user_address.toLowerCase()){
+                    alert(`You don't own '${user_ans}' ANS`);
+                    localStorage.removeItem("ans");
                     show_modal();
-                    alert("You don't own this ANS.");
                     return
                 }
                 fetch(`${IPFS_GATEWAY}/${u[0][2]}/info.json`).then(res=>{
@@ -135,6 +136,8 @@ const WALLET = {
     is_ans_available: async function(forceEdit){
         let self = this;
         return new Promise(async (res, rej)=>{
+            if(typeof IPFS_GATEWAY === 'undefined') {rej(); return}
+
             let ans = JSON.parse(localStorage.getItem("ans"));
             if(ans==null){
                 try{
