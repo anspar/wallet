@@ -136,7 +136,10 @@ const WALLET = {
     is_ans_available: async function(forceEdit){
         let self = this;
         return new Promise(async (res, rej)=>{
-            if(typeof IPFS_GATEWAY === 'undefined') {rej(); return}
+            if(typeof IPFS_GATEWAY === 'undefined' || IPFS_GATEWAY===null) {
+                rej(); 
+                return
+            }
 
             let ans = JSON.parse(localStorage.getItem("ans"));
             if(ans==null){
