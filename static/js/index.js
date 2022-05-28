@@ -156,7 +156,7 @@ const WALLET = {
         let self = this;
         return new Promise(async (res, rej)=>{
             if(typeof IPFS_GATEWAY === 'undefined' || IPFS_GATEWAY===null) {
-                alert("IPFS_GATEWAY not found");
+                console.error("IPFS_GATEWAY is", IPFS_GATEWAY);
                 rej(); 
                 return
             }
