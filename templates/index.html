@@ -1,34 +1,43 @@
 {{#unless release}}
+<html>
+<body>
+{{/unless}}
+
+{{#unless release}}
 {{live_update}}
 {{inject_gateway}}
-{{import_js_web "https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"}}
+
+{{web_component "https://github.com/anspar/arag_common_libs/releases/download/v0.1/build.html"}}
+<span class="ar-theme-switch m-5"></span>
+
 <script>
     document.addEventListener("DOMContentLoaded", async function () {
+        console.log("Starting Wallet")
         await WALLET.setup()
     })
 </script>
 {{/unless}}
 
 {{import_css "static/css/index.css"}}
-<div id="arag_wallet">
+<div id="arag_wallet" class="ar-shadow loading">
     <img src="{{import_img "static/anspar_logo.png"}}">
-    <span>Unknown</span>
+    <span class="ar-text-dark">Unknown</span>
 </div>
 
-<div id="arag_wallet_modal">
+<div id="arag_wallet_modal" class="ar-shadow">
     <div q1>
         <span>Do You Own Anspar Name Space (ANS)?</span>
         <div>
-            <span>No</span>
-            <span>Yes</span>
+            <span class="ar-btn-secondary">No</span>
+            <span class="ar-btn-primary">Yes</span>
         </div>
     </div>
 
     <div q2>
         <input type="text" placeholder="What is your ANS?">
         <div>
-            <span>Cancel</span>
-            <span>Submit</span>
+            <span class="ar-btn-secondary">Cancel</span>
+            <span class="ar-btn-primary">Submit</span>
         </div>
     </div>
 </div>
@@ -37,3 +46,8 @@
     const ANS_ABI = {{ import_json "static/ANS_ABI.json"}};
 </script>
 {{import_js "static/js/index.js"}}
+
+{{#unless release}}
+</body>
+</html>
+{{/unless}}

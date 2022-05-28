@@ -6,16 +6,8 @@
 
 
 ### Requirements 
-1. In html file before wallet import
-```
-    {{inject_gateway}}
-    {{import_js_web "https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"}}
-```
-2. In arag.yml
-```
-    dependencies:
-        - https://cdn.ethers.io/lib/ethers-5.0.umd.min.js
-```
+1. [arag common libs](https://github.com/anspar/arag_common_libs)
+2. [hosq provider](https://github.com/anspar/hosq_provider) or other compatible component
 
 ### Import 
 1. In html file

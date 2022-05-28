@@ -20,14 +20,19 @@ const WALLET = {
     },
     update_user_ans: async function(forceEdit){
         this.user_address = this.web3.selectedAddress;
+        document.querySelector("#arag_wallet").classList.add("loading")
         try{
             let data = await this.is_ans_available(forceEdit);
-            document.querySelector("#arag_wallet>img").src = `${IPFS_GATEWAY}/${data[0]}/${data[1].image}`;
+            if(data[1].image!=="" || typeof data[1].image!=="undefined"){
+                document.querySelector("#arag_wallet>img").src = `${IPFS_GATEWAY}/${data[0]}/${data[1].image}`;
+            }
             document.querySelector("#arag_wallet>span").innerHTML = data[1].name.length>7?`${data[1].name.substring(0,5)}..`:data[1].name;
             document.querySelector("#arag_wallet").style.setProperty("background", data[1].background_color);
         }catch(e){
+            // console.error(e);
             document.querySelector("#arag_wallet span").innerHTML = `${this.user_address.substring(0,3)}..${this.user_address.substring(this.user_address.length-2, this.user_address.length)}`;
         }
+        document.querySelector("#arag_wallet").classList.remove("loading")
     },
     is_ready: async function(){
         if(window.ethereum===undefined){
@@ -108,28 +113,42 @@ const WALLET = {
                 let user_ans = document.querySelector("#arag_wallet_modal div[q2]>input").value;
                 let u = await self.ans.functions.who_is(user_ans);
                 if(u[0][1].toLowerCase()!==self.user_address.toLowerCase()){
-                    alert(`You don't own '${user_ans}' ANS`);
                     localStorage.removeItem("ans");
+                    alert(`You don't own '${user_ans}' ANS`);
                     show_modal();
                     return
                 }
-                fetch(`${IPFS_GATEWAY}/${u[0][2]}/info.json`).then(res=>{
-                    res.json().then(data=>{
-                        localStorage.setItem("ans", JSON.stringify({available:true, ans:user_ans}));
-                        document.querySelector("#arag_wallet_modal").style.setProperty("display", "none");
-                        resolve([u[0][2], data]);
-                    })
-                }).catch((e)=>{alert("Failed to get ANS data from IPFS: "+e)});
+                try{
+                    let res = await fetch(`${IPFS_GATEWAY}/${u[0][2]}/info.json`)
+                    let data = await res.json()
+                    localStorage.setItem("ans", JSON.stringify({available:true, ans:user_ans}));
+                    document.querySelector("#arag_wallet_modal").style.setProperty("display", "none");
+                    resolve([u[0][2], data]);
+                }catch(e){
+                    alert("Failed to get ANS data from IPFS: "+e)
+                    return
+                };
             };
             if(ans?.available && !forceEdit){
                 await submit();
             }
+            
+            const user_submit = async()=>{
+                document.querySelector("#arag_wallet_modal div[q2]>input").classList.add("loading")
+                await submit();
+                document.querySelector("#arag_wallet_modal div[q2]>input").classList.remove("loading")
+            }
+
             document.querySelectorAll("#arag_wallet_modal div[q2]>div>span")[1]
             .addEventListener("click", async(e)=>{
-                let inner = e.target.innerHTML;
-                e.target.innerHTML = "...";
-                await submit();
-                e.target.innerHTML = inner;
+                await user_submit() //todo dispatches twice 
+            });
+
+            document.querySelector("#arag_wallet_modal div[q2]>input")
+            .addEventListener("keyup", async(e)=>{
+                if (e.key === "Enter") {
+                    await user_submit() //todo dispatches twice
+                }
             });
         })
     },
@@ -137,6 +156,7 @@ const WALLET = {
         let self = this;
         return new Promise(async (res, rej)=>{
             if(typeof IPFS_GATEWAY === 'undefined' || IPFS_GATEWAY===null) {
+                alert("IPFS_GATEWAY not found");
                 rej(); 
                 return
             }

@@ -1,5 +1,5 @@
 #arag_wallet{
-    background: rgba(255,255,225, 0.7);
+    background-color: var(--ar-light);
     position: absolute;
     width: calc(100vh*0.07);
     height: calc(100vh*0.07);
@@ -35,17 +35,19 @@
 #arag_wallet_modal>[q2]>input{
     border-style: none;
     border-radius: 100vh;
-    filter: drop-shadow(0 5px 20px #5bc0be99);
+    /* filter: drop-shadow(0 5px 20px #5bc0be99); */
     transition: 0.4s;
 }
 
-#arag_wallet_modal>[q2]>input{
+#arag_wallet_modal>[q2]>input, #arag_wallet_modal>[q1]>span{
     outline-width: 0;
     width: 90%;
+    background-color: var(--ar-dark-dim);
+    border-radius: 100vh;
 }
 
 #arag_wallet_modal{
-    background: #ffffff99;
+    background-color: var(--ar-light-dim);
     backdrop-filter: blur(6px);
     position: absolute;
     width: 100vw;
@@ -60,7 +62,7 @@
 
 #arag_wallet_modal>[q1], #arag_wallet_modal>[q2]{
     position: relative;
-    background: #ffffffe0;
+    background-color: var(--ar-light);
     height: 400px;
     width: 600px;
     display: flex;
@@ -114,19 +116,8 @@
 #arag_wallet_modal>[q1]>div span, #arag_wallet_modal>[q2]>div span{
     padding: 2% 5%;
     cursor: pointer;
-    color: #ffffffe0;
+    color: var(--ar-light);
     min-width: 50px;
-}
-#arag_wallet_modal>[q1]>div span:hover, #arag_wallet_modal>[q2]>div span:hover{
-    transform: scale(1.05);
-}
-
-#arag_wallet_modal>[q1]>div>span:nth-child(1), #arag_wallet_modal>[q2]>div>span:nth-child(1){
-    background: #DB245D9e;
-}
-
-#arag_wallet_modal>[q1]>div>span:nth-child(2), #arag_wallet_modal>[q2]>div>span:nth-child(2){
-    background: #24DBA29e;
 }
 
 
