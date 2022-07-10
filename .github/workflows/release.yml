@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v1
       
       - name: download arag 
-        run: wget https://github.com/anspar/arag/releases/download/v0.2.23/arag_ubuntu-20.04 -O arag && chmod +x arag
+        run: wget https://github.com/anspar/arag/releases/download/v0.2.25/arag_ubuntu-20.04 -O arag && chmod +x arag
 
       - name: build 
         run: ./arag release && ls

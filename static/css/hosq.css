@@ -1,0 +1,22 @@
+#hosq-provider-div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--ar-dark-dim);
+    width: fit-content;
+    height: fit-content;
+    padding: 5px;
+    border-radius: 100vh;
+    border-style: none;
+}
+
+#hosq-provider-div *{
+    margin: 0% 1%;
+    font-size: 1rem;
+}
+
+#hosq-provider-div input, #hosq-provider-div button {
+    width: 25%;
+    border-radius: 100vh;
+    border-style: none;
+}

@@ -1,4 +1,2 @@
 ipfs_gateway: https://ipfs.anspar.io/gateway
 port: 11223
-dependencies:
-  - https://github.com/anspar/arag_common_libs/releases/download/v0.1/build.html

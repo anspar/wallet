@@ -6,19 +6,16 @@
 
 
 ### Requirements 
-1. [arag common libs](https://github.com/anspar/arag_common_libs)
-2. [hosq provider](https://github.com/anspar/hosq_provider) or other compatible component
+[arag common libs](https://github.com/anspar/arag_common_libs)
 
 ### Import 
-1. In html file
+In html file
 ```
-    {{web_component "https://github.com/anspar/wallet/releases/download/<release-version>/build.html"}}
+    <div style="width: 130px; height: 40px;">
+        {{web_component "https://github.com/anspar/wallet/releases/download/<release-version>/build.html"}}
+    </div>
 ```
-2. In arag.yml
-```
-    dependencies:
-        - https://github.com/anspar/wallet/releases/download/<release-version>/build.html
-```
+
 #### OR
 Download the `build.html` file and add it to the project with
 ```
@@ -27,43 +24,61 @@ Download the `build.html` file and add it to the project with
 
 
 ### Setup wallet
-This will ask user for an ANS. If user owns the ANS the profile will be loaded, otherwise wallet address will be shown.
+If user owns the ANS the profile will be loaded, otherwise wallet address will be shown.
 ```
-document.addEventListener("DOMContentLoaded", async function(){
-    await WALLET.setup();
-    if(!await WALLET.is_ready()) return;
-    ...
+const private = {{import_json "private.json"}};
+$(document).ready(async () => {
+    WALLET.providerOptions = { // optional
+        walletconnect: {
+            package: WalletConnectProvider.default,
+            options: {
+                infuraId: private.INFURA_ID 
+            }
+        }
+    };
 
-    OR
-    
-    if(await WALLET.is_ready()){
-        ...
-    }
+    await WALLET.setup(); // required
 })
 ```
 
-### Available Properties
-`WALLET.web3` : returns window.ethereum object
+## Available Objects
+### WALLET
+    addressToShort: ƒ (t)
+    connect: async ƒ ()
+    disconnect: async ƒ ()
+    getProvider: ƒ ()
+    getSigner: ƒ ()
+    is_ready: async ƒ ()
+    network: object
+    providerOptions: {walletconnect: {…}}
+    setup: async ƒ ()
+    setup_contract: ƒ (t,e,a)
+    showANS: async ƒ ()
+    updateDetails: async ƒ (t)
+    user_address: string
+    _instance: web3Modal instance
+    _provider: ethers-5 provider
+    _web3Modal: L 
 
-`WALLET.user_address` : returns selected user address
+### HOSQ
+    contract: ethers-5 instance
+    gateway: string
+    get: async ƒ (t)
+    is_ready: ƒ ()
+    provider: object
+    select_provider: async ƒ (t)
+    setup: async ƒ ()
+    upload: async ƒ (t,o,e,r=null)
+    upload_dir: async ƒ (t,o,e=!1,r=!1,a=null)
 
-`WALLET.ans` : returns ANS smart contract wrapped with ethersjs library
+### ANS
+    contract: ethers-5 instance
+    getDefaultANS: async ƒ ()
+    is_ready: ƒ ()
+    setup: async ƒ ()
 
-```
-document.addEventListener("DOMContentLoaded", async function(){
-    await WALLET.setup();
-    if(!await WALLET.is_ready()) return;
-    
-    if(!await WALLET.is_contract_ready()) return;
-
-    let userDetails = await WALLET.ans.functions.who_is('user ans');
-
-    ...
-
-})
-```
 ### Note
-You can always get all available attributes with `Object.keys(HOSQ_PROVIDER)`
+You can always get all available attributes with `Object.keys(<Object Name>)`
 ## Ask question at [Discord](https://discord.gg/ENQfPEcrZJ)
 
 [anspar.io](https://anspar.io)

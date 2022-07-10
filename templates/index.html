@@ -1,53 +1,73 @@
 {{#unless release}}
 <html>
+
 <body>
-{{/unless}}
+    {{/unless}}
 
-{{#unless release}}
-{{live_update}}
-{{inject_gateway}}
+    {{#unless release}}
+    {{live_update}}
+    {{!-- {{inject_gateway}} --}}
+    {{web_component "https://github.com/anspar/arag_common_libs/releases/download/v0.3/build.html"}}
+    <div class="ar-theme-switch m-5" style="width: 20px;"></div>
+    {{/unless}}
 
-{{web_component "https://github.com/anspar/arag_common_libs/releases/download/v0.1/build.html"}}
-<span class="ar-theme-switch m-5"></span>
+    {{import_js_web "https://github.com/Web3Modal/web3modal/releases/download/1.9.8/index.js"}}
+    {{import_js_web "https://unpkg.com/@walletconnect/web3-provider@1.7.8/dist/umd/index.min.js"}}
+    {{import_css "static/css/index.css"}}
+    
+    {{#unless release}}
+    <div style="width: 130px; height: 40px;" class="ar-shadow">
+    {{/unless}}
+    
+        <div id="arag_wallet">
+            <img src=" " alt="Wallet Image" class="ar-shadow" 
+            onerror="this.src='{{import_img "static/imgs/wallet-solid.png"}}'">
+            <span class="text-size-n">Connect</span>
+        </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", async function () {
-        console.log("Starting Wallet")
-        await WALLET.setup()
-    })
-</script>
-{{/unless}}
-
-{{import_css "static/css/index.css"}}
-<div id="arag_wallet" class="ar-shadow loading">
-    <img src="{{import_img "static/anspar_logo.png"}}">
-    <span class="ar-text-dark">Unknown</span>
-</div>
-
-<div id="arag_wallet_modal" class="ar-shadow">
-    <div q1>
-        <span>Do You Own Anspar Name Space (ANS)?</span>
-        <div>
-            <span class="ar-btn-secondary">No</span>
-            <span class="ar-btn-primary">Yes</span>
+    {{#unless release}}
+    </div>
+    {{/unless}}
+    
+    <div class="d-none justify-content-center align-items-center" id="arag_wallet_modal">
+        <div class="ar-bg-light ar-shadow">
+            <span class="text-size-xl">HOSQ Provider</span>
+            {{>hosq}}
+            <br>
+            <span class="btn ar-btn-primary w-100"
+                onclick="WALLET.disconnect()">Disconnect Wallet</span>
+            
+            <span class="btn ar-btn-secondary w-100" style="margin-top: 2%;" 
+                onclick="$('div#arag_wallet_modal').removeClass('d-flex').addClass('d-none')">Close</span>
         </div>
     </div>
 
-    <div q2>
-        <input type="text" placeholder="What is your ANS?">
-        <div>
-            <span class="ar-btn-secondary">Cancel</span>
-            <span class="ar-btn-primary">Submit</span>
-        </div>
-    </div>
-</div>
-
-<script>
-    const ANS_ABI = {{ import_json "static/ANS_ABI.json"}};
-</script>
-{{import_js "static/js/index.js"}}
+    <script>
+        {{!-- const CHAINS = JSON.parse('{{web_component "https://chainid.network/chains.json"}}'); --}}
+        const HOSQ_ABI = {{ import_json "static/hosq_abis.json"}};
+        const ANS_ABI = {{ import_json "static/ans_abis.json"}};
+    </script>
+    {{import_js "static/js/ans.js"}}
+    {{import_js "static/js/index.js"}}
 
 {{#unless release}}
+<script>
+        const private = {{import_json "private.json"}};
+        $(document).ready(async () => {
+            WALLET.providerOptions = {
+                /* See Provider Options Section */
+                walletconnect: {
+                    package: WalletConnectProvider.default, // required
+                    options: {
+                        infuraId: private.INFURA_ID // required
+                    }
+                }
+            };
+
+            await WALLET.setup();
+        })
+    </script>
 </body>
+
 </html>
 {{/unless}}
