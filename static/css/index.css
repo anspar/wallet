@@ -21,7 +21,7 @@
     border-style: none;
 }
 
-#arag_wallet{
+#arag_wallet, .arag_wallet_container{
     border-style: none;
     border-radius: 100vh;
     /* filter: drop-shadow(0 5px 20px #5bc0be99); */
@@ -48,7 +48,7 @@
 }
 
 @media only screen and (max-width: 600px) {
-    #arag_wallet_modal>[q1], #arag_wallet_modal>[q2]{
+    #arag_wallet_modal>div{
         width: 90vw;
     }
 }

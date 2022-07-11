@@ -1,9 +1,12 @@
 # Wallet
 
-## A wallet component for [Arag](https://github.com/anspar/arag) dapps.
+## A wallet component for [Arag](https://github.com/anspar/arag) nApps.
 
 ![release](https://github.com/anspar/wallet/actions/workflows/release.yml/badge.svg?branch=main)
 
+<img src="demo/wallet.png" style="width: 160px; height:90px; object-fit: cover;">
+
+<img src="demo/wallet_ans.png" style="width: 160px; height:90px; object-fit: cover;">
 
 ### Requirements 
 [arag common libs](https://github.com/anspar/arag_common_libs)
@@ -85,6 +88,10 @@ Somewhere else
 
 ### Note
 You can always get all available attributes with `Object.keys(<Object Name>)`
-## Ask question at [Discord](https://discord.gg/ENQfPEcrZJ)
+## Ask questions at [Discord](https://discord.gg/ENQfPEcrZJ)
+
+<img src="demo/wallet_connect.png" style="width: 240px; height:240px; object-fit: cover;">
+
+<img src="demo/dstorage_provider.png" style="width: 240px; height:240px; object-fit: cover;">
 
 [anspar.io](https://anspar.io)

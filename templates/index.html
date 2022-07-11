@@ -1,13 +1,13 @@
 {{#unless release}}
 <html>
 
-<body>
+<body class="ar-bg-light">
     {{/unless}}
 
     {{#unless release}}
     {{live_update}}
     {{!-- {{inject_gateway}} --}}
-    {{web_component "https://github.com/anspar/arag_common_libs/releases/download/v0.4.5/build.html"}}
+    {{web_component "https://github.com/anspar/arag_common_libs/releases/download/v0.4.6/lib.html"}}
     <div class="ar-theme-switch m-5" style="width: 20px;"></div>
     {{/unless}}
 
@@ -16,11 +16,11 @@
     {{import_css "static/css/index.css"}}
     
     {{#unless release}}
-    <div style="width: 130px; height: 40px;" class="ar-shadow">
+    <div style="width: 130px; height: 40px;" class="m-5 ar-shadow-sm arag_wallet_container">
     {{/unless}}
     
         <div id="arag_wallet">
-            <img src=" " alt="Wallet Image" class="ar-shadow" 
+            <img src=" " alt="Wallet Image"  
             onerror="this.src='{{import_img "static/imgs/wallet-solid.png"}}'">
             <span class="text-size-n">Connect</span>
         </div>
