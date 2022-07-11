@@ -64,16 +64,16 @@ const WALLET = {
         window.location.reload();
     },
     getProvider: function () {
-        if (this._provider === null) throw "Provider not available, did you call 'connect'?";
+        if (this._provider === null) throw "Provider not available, did you connect wallet?";
         return this._provider;
     },
     addressToShort: function (address) {
         if (address.length !== 42) throw "Not evm address";
         return `${address.substring(0, 3)}..${address.substring(38, 42)}`
     },
-    setup_contract: function (networks, abi, contarctName) {
+    setup_contract: function (networks, abi, contractName) {
         if (networks[this.network.chainId] === undefined || networks[this.network.chainId] === null) {
-            showMsg(`${contarctName} is not available on '${this.network.name}' chain`, "warning", 10);
+            showMsg(`${contractName} is not available on '${this.network.name}' chain`, "warning", 10);
             return null;
         }
         return new ethers.Contract(networks[this.network.chainId], abi, this.getSigner());
@@ -83,9 +83,28 @@ const WALLET = {
             return (await this.getProvider().listAccounts()).length > 0
         } catch (e) {
             console.error(e);
-            showMsg("Please Connect Your Wallet", "warning", 10);
+            // showMsg("Please Connect Your Wallet", "primary", 10);
             return false
         }
+    },
+    until_ready: async function () {
+        return new Promise(r => {
+            try {
+                if (this.getProvider() !== null) {
+                    r(true);
+                    return
+                }
+            } catch { }
+            let i = setInterval(() => {
+                try {
+                    if (this.getProvider() !== null) {
+                        clearInterval(i);
+                        r(true);
+                        return
+                    }
+                } catch { }
+            }, 1000);
+        })
     },
     showANS: async function () {
         // console.log(ans);
@@ -95,6 +114,20 @@ const WALLET = {
         $("div#arag_wallet").css("background-color", ans[1].background_color);
         $("div#arag_wallet>img").attr("src", `${HOSQ.gateway}/${ans[0][1]}/${ans[1].image}`);
     },
+    signMessage: async function(message){
+        let lib = this.getProvider();
+        if (lib===null) return;
+        try {
+            const signature = await lib.provider.request({
+                method: "personal_sign",
+                params: [message, this.user_address]
+            });
+            return signature
+        } catch (error) {
+            console.error(error);
+            showMsg("Failed to sign a message", "danger", 5);
+        }
+    }
 };
 
 $(document).ready(async () => {

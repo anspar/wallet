@@ -40,21 +40,27 @@ $(document).ready(async () => {
     await WALLET.setup(); // required
 })
 ```
+Somewhere else
+```
+    await WALLET.until_ready(); // will block until wallet is connected
+```
 
 ## Available Objects
 ### WALLET
-    addressToShort: ƒ (t)
+    addressToShort: ƒ (address)
     connect: async ƒ ()
     disconnect: async ƒ ()
     getProvider: ƒ ()
     getSigner: ƒ ()
     is_ready: async ƒ ()
-    network: object
-    providerOptions: {walletconnect: {…}}
+    network: {chainId, name}
+    providerOptions: {}
     setup: async ƒ ()
-    setup_contract: ƒ (t,e,a)
+    setup_contract: ƒ (networks:{id:address}, abi, contractName)
     showANS: async ƒ ()
-    updateDetails: async ƒ (t)
+    signMessage: async ƒ (message)
+    until_ready: async ƒ ()
+    updateDetails: async ƒ (callback)
     user_address: string
     _instance: web3Modal instance
     _provider: ethers-5 provider
@@ -63,13 +69,13 @@ $(document).ready(async () => {
 ### HOSQ
     contract: ethers-5 instance
     gateway: string
-    get: async ƒ (t)
+    get: async ƒ (cid)
     is_ready: ƒ ()
     provider: object
-    select_provider: async ƒ (t)
+    select_provider: async ƒ (id)
     setup: async ƒ ()
-    upload: async ƒ (t,o,e,r=null)
-    upload_dir: async ƒ (t,o,e=!1,r=!1,a=null)
+    upload: async ƒ (data, json, dir, progress?)
+    upload_dir: async ƒ (files, json, dir_name, info?, progress?)
 
 ### ANS
     contract: ethers-5 instance

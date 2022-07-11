@@ -1,7 +1,7 @@
 const ANS = {
     contract: null,
     setup: async function () {
-        if (!await WALLET.is_ready()) return;
+        await WALLET.until_ready();
         if (!await HOSQ.is_ready()) return;
         this.contract = WALLET.setup_contract(ANS_ABI.ans.networks, ANS_ABI.ans.abi, "ANS");
         if (this.contract === null) return;

@@ -3,7 +3,7 @@ const HOSQ = {
     provider: null,
     gateway: null,
     setup: async function () {
-        if (!await WALLET.is_ready()) return
+        await WALLET.until_ready();
         this.contract = WALLET.setup_contract(HOSQ_ABI.hosq.networks, HOSQ_ABI.hosq.abi, "Hosq");
         if (this.contract === null) return;
 
