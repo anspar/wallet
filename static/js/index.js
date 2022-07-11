@@ -83,21 +83,25 @@ const WALLET = {
             return (await this.getProvider().listAccounts()).length > 0
         } catch (e) {
             console.error(e);
-            // showMsg("Please Connect Your Wallet", "primary", 10);
+            showMsg("Please Connect Your Wallet", "primary", 10);
             return false
         }
     },
     until_ready: async function () {
         return new Promise(r => {
             try {
-                if (this.getProvider() !== null) {
+                if (this.getProvider() !== null
+                    && this.network !== null
+                    && this.user_address !== null) {
                     r(true);
                     return
                 }
             } catch { }
             let i = setInterval(() => {
                 try {
-                    if (this.getProvider() !== null) {
+                    if (this.getProvider() !== null
+                        && this.network !== null
+                        && this.user_address !== null) {
                         clearInterval(i);
                         r(true);
                         return
@@ -114,9 +118,9 @@ const WALLET = {
         $("div#arag_wallet").css("background-color", ans[1].background_color);
         $("div#arag_wallet>img").attr("src", `${HOSQ.gateway}/${ans[0][1]}/${ans[1].image}`);
     },
-    signMessage: async function(message){
+    signMessage: async function (message) {
         let lib = this.getProvider();
-        if (lib===null) return;
+        if (lib === null) return;
         try {
             const signature = await lib.provider.request({
                 method: "personal_sign",
